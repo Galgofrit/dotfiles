@@ -1,0 +1,8 @@
+[core]
+	editor = mvim -v
+	excludesfile = /Users/galg/.gitignore_global
+[user]
+	name = Gal Gofrit
+	email = galg@sentinelone.com
+[credential]
+	helper = osxkeychain

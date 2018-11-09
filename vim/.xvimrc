@@ -1,0 +1,58 @@
+set number
+syntax on
+filetype plugin on 
+filetype indent on 
+
+set autoread
+command W w !sudo tee % > /dev/null
+set ruler
+set incsearch
+set lazyredraw
+set magic
+set showmatch
+
+" Tab
+set expandtab
+set smarttab
+set shiftwidth=4
+set tabstop=4
+
+" Compilation
+autocmd filetype python nnoremap <F5> :w <bar> exec '!python '.shellescape('%')<CR>
+autocmd filetype c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+
+
+" DelimitMate settings
+let g:delimitMate_autoclose = 1
+let g:delimitMate_matchpairs = "(:),[:],{:},<:>"
+let g:delimitMate_jump_expansion = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_expand_cr = 2
+let g:delimitMate_expand_inside_quotes = 1
+
+" NERDCommenter settings
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDTrimTrailingWhitespace = 1
+let g:NERDCommentEmptyLines = 1
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
+call plug#begin()
+Plug 'scrooloose/nerdcommenter'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-surround'
+Plug 'Raimondi/delimitMate'
+" Plug 'Valloric/YouCompleteMe'
+Plug 'vim-syntastic/syntastic'
+
+call plug#end()
