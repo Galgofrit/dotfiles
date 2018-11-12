@@ -270,6 +270,7 @@ Plug 'tpope/vim-surround' " support more surrounds
 Plug 'tpope/vim-dispatch' " background tasks in vim
 Plug 'tpope/vim-repeat'
 Plug 'gregsexton/MatchTag' " match pairs in HTML and XML
+Plug 'Yggdroot/indentLine' " show lines underneath matching brackets
 Plug 'christoomey/vim-tmux-navigator' " integrate with tmux
 Plug 'vim-scripts/L9' " required for other plugins
 Plug 'vim-scripts/FuzzyFinder' " fuzzy file browser
@@ -300,21 +301,21 @@ call plug#end()
 
 " Colorscheme
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
-if (empty($TMUX))
-  if (has("nvim"))
-  "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-  endif
-  "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
-  " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
-  if (has("termguicolors"))
-    set termguicolors
-  endif
-endif
+" if (empty($TMUX))
+  " if (has("nvim"))
+  " "For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
+  " let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  " endif
+  " "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
+  " "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+  " " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
+  " if (has("termguicolors"))
+    " set termguicolors
+  " endif
+" endif
 
 let g:onedark_color_overrides = {
  \ "black": {"gui": "#ffffff", "cterm": "0", "cterm16": "0" }
 \}
-" set background=dark " for the dark version
 colorscheme onedark
+set background=dark " for the dark version
