@@ -217,6 +217,17 @@ function! ShowFuncName()
 endfunction
 
 
+" My own code to format S1 logs.
+function! SentinelLogs()
+    :set filetype=python
+    :silent! %s/true/True/g
+    :silent! %s/false/False/g
+    :ALEFix
+endfunction
+autocmd BufRead */SentinelLog_*/match_reports/* call SentinelLogs()
+autocmd VimEnter */SentinelLog_*/match_reports/* echom "Pretty-formatted Sentinel log file."
+
+
 " CtrlP
 " Make ctrlp a lot faster in git repositories
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
