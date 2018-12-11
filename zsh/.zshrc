@@ -40,8 +40,7 @@ ZSH_THEME="robbyrussell"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# much, much faster.  # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -98,6 +97,9 @@ export HOMEBREW_GITHUB_API_TOKEN=67949c42a8cdf30cfc42276a0e60255cb09a4161
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# Locale, otherwise prompt is scrambled
+export LC_CTYPE=en_US.UTF-8
+
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
 if [[ -f "/usr/local/bin/mvim" ]]; then
@@ -132,6 +134,7 @@ alias signature="codesign -dv --verbose=4"
 alias mview="/Applications/MachOView.app/Contents/MacOS/MachOView"
 alias readlink="greadlink"
 alias sigtypes="~/sentinel/signature_types.sh | less"
+alias view-logs="log show system_logs.logarchive | grep sentinel | vim - "
 
 # Dark theme for Slack - apply after Slack updates
 alias slackdark='cat ~/slack_dark_theme.js >> /Applications/Slack.app/Contents/Resources/app.asar.unpacked/src/static/ssb-interop.js'
@@ -144,3 +147,5 @@ source ~/.python_path
 
 # FZF
 export FZF_DEFAULT_COMMAND='ag -g ""'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
