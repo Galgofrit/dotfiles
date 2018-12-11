@@ -1,8 +1,11 @@
 [core]
-	editor = mvim -v
+	editor = vim
 	excludesfile = /Users/galg/.gitignore_global
 [user]
 	name = Gal Gofrit
 	email = galg@sentinelone.com
 [credential]
 	helper = osxkeychain
+
+[alias]
+lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
