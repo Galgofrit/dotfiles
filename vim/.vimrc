@@ -7,17 +7,35 @@ set ignorecase
 set smartcase
 set nowrap
 autocmd BufEnter * silent! lcd %:p:h
+set encoding=utf-8
+
+" Tzury
+function! Tzury(a, macro_register)
+    set nowrapscan
+    norm @a:macro_register
+    set wrapscan
+endfunction
+
+
+" for command mode
+nnoremap <S-Tab> <Up>
+" for insert mode
+inoremap <S-Tab> <Up>
+
 
 " Tab NOW SET BY AutoIndent
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
 let g:detectindent_preferred_tabstop = 4
+
+
 " autocmd BufReadPost * :DetectIndent
 set expandtab
 set smarttab
 set shiftwidth=4
 set tabstop=4
 autocmd filetype xml :DetectIndent
+set hidden " allow opening of new buffers without saving current one
 
 " Tags
 " set tags+="~/.vim/tags"
@@ -25,6 +43,10 @@ autocmd filetype xml :DetectIndent
 let g:ctags_statusline=1
 let ctags_title=1
 
+" Quickly set indentation mode by z0, z1, z2
+nnoremap z0 :set fdm=manual<CR>
+nnoremap z1 :set fdm=indent<CR>
+nnoremap z2 :set fdm=syntax<CR>
 
 
 set autoread " auto reload changed files
@@ -147,10 +169,18 @@ autocmd filetype c nmap <leader>f :ClangFormat<cr>
 autocmd filetype json nmap <leader>f :execute '%!python -m json.tool'<cr>
 
 
+" Auto fix with \r on python, c
+autocmd filetype python nmap <leader>f :ALEFix<cr>
+autocmd filetype c nmap <leader>r :YcmCompleter FixIt<cr>
+
+
 " Jedi-vim
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
 let g:jedi#completions_enabled = 1
+
+let g:jedi#force_py_version=3
+set bs=2
 
 
 " Gutentags
@@ -162,6 +192,12 @@ let g:GtagsCscope_Auto_Map = 1
 let g:GtagsCscope_Auto_Load = 1
 let g:GtagsCscope_Quiet = 1
 set statusline+=%{gutentags#statusline()}
+
+" Tagbar
+nnoremap <silent> <F4> :TagbarToggle<CR><C-w>l
+let g:tagbar_autoclose = 1
+let g:tagbar_map_nexttag = 'J'
+let g:tagbar_map_prevtag = 'K'
 
 
 " Lineline
@@ -263,14 +299,16 @@ map <F3> :FufFileWithFullCwd<CR>
 
 
 " man on current word with m
-nmap M <Plug>(Man)
+nmap m <Plug>(Man)
 " nmap m <Plug>(Vman) " Vertical
 
 " vimplugged
 call plug#begin()
-Plug 'Valloric/YouCompleteMe' " our lord and savior
+" Plug 'Valloric/YouCompleteMe' " our lord and savior
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'w0rp/ale' " async python analysis
 Plug 'davidhalter/jedi-vim' " used mostly for refactor
+" Plug 'python-rope/ropevim' " refactor
 Plug 'tpope/vim-fugitive' " git wrapper
 
 Plug 'joshdick/onedark.vim' " colorscheme
@@ -280,14 +318,18 @@ Plug 'Raimondi/delimitMate' " auto add newline and }
 Plug 'tpope/vim-surround' " support more surrounds
 Plug 'tpope/vim-dispatch' " background tasks in vim
 Plug 'tpope/vim-repeat'
-Plug 'gregsexton/MatchTag' " match pairs in HTML and XML
+Plug 'gregsexton/MatchTag' " match pairs in HTML and XML (blue highlight)
+Plug 'tmhedberg/matchit' " match pairs in HTML and XML with %
 Plug 'Yggdroot/indentLine' " show lines underneath matching brackets
 Plug 'christoomey/vim-tmux-navigator' " integrate with tmux
+Plug 'tpope/vim-obsession' " better VIM session restoration
 Plug 'vim-scripts/L9' " required for other plugins
 Plug 'vim-scripts/FuzzyFinder' " fuzzy file browser
 Plug 'vim-utils/vim-man' " man pages in vim
 Plug 'ciaranm/detectindent' " auto set indentation according to current file indentation
 Plug 'rhysd/vim-clang-format' "  autoformat C family code
+Plug 'gilligan/vim-lldb' " lldb debuuger integrated into vim
+Plug 'ctruett/Checklist.vim' " add checklist filetype to vim
 
 Plug 'easymotion/vim-easymotion' " quickly jump to letters
 Plug 'vim-scripts/camelcasemotion' " ',w', ',b', ',e' to navigate camelcase
@@ -302,7 +344,7 @@ Plug 'tyru/current-func-info.vim' " show function name in statusbar
 
 Plug 'airblade/vim-rooter' " manage root directory according to .git files
 Plug 'kien/ctrlp.vim' " quick search bar
-Plug '/usr/local/opt/fzf' " quickly search in files
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " install fzf utility
 Plug 'junegunn/fzf.vim'   " quickly search in files
 
 Plug 'msanders/cocoa.vim' " objective c support
