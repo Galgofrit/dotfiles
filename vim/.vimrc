@@ -1,4 +1,16 @@
-" General
+" Galgo's Grand .vimrc
+" isn't it lovely? ^^"
+
+" #general
+" #shortcuts
+" #pluginsettings
+" #language
+" #tags
+" #plugins
+" #color
+
+
+"" GENERAL #general
 set number
 syntax on
 filetype plugin on
@@ -8,54 +20,79 @@ set smartcase
 set nowrap
 autocmd BufEnter * silent! lcd %:p:h
 set encoding=utf-8
-
-" Tzury
-function! Tzury(a, macro_register)
-    set nowrapscan
-    norm @a:macro_register
-    set wrapscan
-endfunction
-
-
-" for command mode
-nnoremap <S-Tab> <Up>
-" for insert mode
-inoremap <S-Tab> <Up>
-
-
-" Tab NOW SET BY AutoIndent
-let g:detectindent_preferred_expandtab = 1
-let g:detectindent_preferred_indent = 4
-let g:detectindent_preferred_tabstop = 4
-
-
-" autocmd BufReadPost * :DetectIndent
-set expandtab
-set smarttab
-set shiftwidth=4
-set tabstop=4
-autocmd filetype xml :DetectIndent
-set hidden " allow opening of new buffers without saving current one
-
-" Tags
-" set tags+="~/.vim/tags"
-" set tags+="./tags"
-let g:ctags_statusline=1
-let ctags_title=1
-
-" Quickly set indentation mode by z0, z1, z2
-nnoremap z0 :set fdm=manual<CR>
-nnoremap z1 :set fdm=indent<CR>
-nnoremap z2 :set fdm=syntax<CR>
-
-
 set autoread " auto reload changed files
-command W w !sudo tee % > /dev/null
 set ruler
 set incsearch
 set lazyredraw
 set magic
 set showmatch
+set hidden " allow opening of new buffers without saving current one
+set clipboard=unnamed " Merge clipboards with system's
+
+" Tab
+set expandtab
+set smarttab
+set shiftwidth=4
+set tabstop=4
+
+command W w !sudo tee % > /dev/null
+
+" Have Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+"" CUSTOM SHORTCUTS #shortcuts
+" Escape for regex
+function! Escape()
+    s/(/\\(/g
+    s/)/\\)/g
+    s/\[/\\\[/g
+    s/\]/\\\]/g
+    s/\./\\\./g
+    s/\^/\\\^/g
+    s/\$/\\\$/g
+    s/+/\\+/g
+endfunction
+noremap <silent><leader>e :silent! call Escape()<CR>
+
+" Trim trailing whitespaces
+function! TrimTrailing()
+    s/\s\+$//e
+endfunction
+noremap <silent><leader>d :silent! call TrimTrailing()<CR>
+
+function! ShowFuncName()
+    return cfi#format("%s", "")
+endfunction
+
+" My own code to format S1 logs.
+function! SentinelLogs()
+    :set filetype=python
+    :silent! %s/true/True/g
+    :silent! %s/false/False/g
+    :ALEFix
+endfunction
+autocmd BufRead */SentinelLog_*/match_reports/* call SentinelLogs()
+autocmd VimEnter */SentinelLog_*/match_reports/* echom "Pretty-formatted Sentinel log file."
+
+" Fix shift-tab not functional on some terminals
+nnoremap <S-Tab> <Up>
+inoremap <S-Tab> <Up>
+
+" Tab width set by AutoIndent
+let g:detectindent_preferred_expandtab = 1
+let g:detectindent_preferred_indent = 4
+let g:detectindent_preferred_tabstop = 4
+" autocmd BufReadPost * :DetectIndent " NOTE uncomment for autoindent (based 
+" on current file indentation)
+autocmd filetype xml :DetectIndent
+
+" Quickly set indentation mode by z0, z1, z2
+nnoremap z0 :set fdm=manual<CR>
+nnoremap z1 :set fdm=indent<CR>
+nnoremap z2 :set fdm=syntax<CR>
 
 " Add full file path to statusline
 set statusline+=%F
@@ -65,24 +102,16 @@ set laststatus=2
 autocmd filetype c nnoremap <F5> :w <bar> :Dispatch gcc *.c -o out; ./out<CR>
 autocmd filetype python nnoremap <F5> :w <bar> :Dispatch python %<CR>
 autocmd filetype objc nnoremap <F5> :w <bar> :Dispatch clag -framework Foundation *.m  -o out; ./out%<CR>
+" with no dispatch:
 " autocmd filetype python nnoremap <F5> :w <bar> exec '!python '.shellescape('%')<CR>
 " autocmd filetype c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 " autocmd filetype objc nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-
-" Have Vim jump to the last position when reopening a file
-if has("autocmd")
-  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
-endif
 
 " Have Vim start in position 0 and in insert mode in git commits
 autocmd filetype gitcommit exe "normal gg0" | startinsert
 
 " Surround - use lowercase s to surround with
 vmap s S
-
-" Merge clipboards with system's
-set clipboard=unnamed
 
 " Folding settings
 " XML
@@ -92,10 +121,7 @@ augroup XML
     augroup END
 
 
-" " " " " " " " " " " "
-" " PLUGIN SETTINGS " "
-" " " " " " " " " " " "
-
+"" PLUGIN SETTINGS #pluginsettings
 " DelimitMate settings
 let g:delimitMate_autoclose = 1
 let g:delimitMate_matchpairs = "(:),[:],{:}"
@@ -111,13 +137,11 @@ let g:delimitMate_expand_inside_quotes = 1
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDTrimTrailingWhitespace = 1
-let g:NERDCommentEmptyLines = 1
+" let g:NERDCommentEmptyLines = 0
+noremap <silent> <leader>cc :call NERDComment(0,"comment")<C-m>
 
 
 " YouCompleteMe settings
-" Doesn't work - fix this
-" autocmd FileType man let g:loaded_youcompleteme = 1
-"
 inoremap <silent> <C-c> <Esc>:pclose<CR><Esc>
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
@@ -133,7 +157,6 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_auto_start_csharp_server = 0
 let g:ycm_cache_omnifunc = 0
 let g:ycm_auto_trigger = 1
-" let g:ycm_collect_identifiers_from_tags_files = 1
 let g:ycm_semantic_triggers = {
  \ 'objc' : ['re!\@"\.*"\s',
  \ 're!\@\w+\.*\w*\s',
@@ -150,19 +173,27 @@ let g:ycm_semantic_triggers = {
  \ 're!,\s*', ],
  \ }
 autocmd filetype c nnoremap gd :YcmCompleter GoTo<CR>
-" map F :YcmCompleter FixIt<CR> " Apply YCM FixIt
 
 
-" ale
-" Check Python files with flake8 and pylint.
-let b:ale_linters = ['flake8', 'pylint']
-" Enable completion where available.
-let g:ale_completion_enabled = 1
+" Jedi-vim
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_enabled = 1
+
+let g:jedi#force_py_version=3
+set bs=2
+
+
+" ALE
+let b:ale_linters = ['flake8', 'pylint'] " Check Python files with flake8 and pylint.
+let g:ale_completion_enabled = 1 " Enable completion where available.
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['autopep8', 'yapf'],
 \}
 
+
+"" COMMON lANGUAGE FEATURES #language
 " Auto style/format with \f on python, c, json
 autocmd filetype python nmap <leader>f :ALEFix<cr>
 autocmd filetype c nmap <leader>f :ClangFormat<cr>
@@ -174,14 +205,9 @@ autocmd filetype python nmap <leader>f :ALEFix<cr>
 autocmd filetype c nmap <leader>r :YcmCompleter FixIt<cr>
 
 
-" Jedi-vim
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_enabled = 1
-
-let g:jedi#force_py_version=3
-set bs=2
-
+"" TAGS #tags
+let g:ctags_statusline=1
+let ctags_title=1
 
 " Gutentags
 " let g:gutentags_modules = ['ctags', 'gtags_cscope']
@@ -201,22 +227,20 @@ let g:tagbar_map_prevtag = 'K'
 
 
 " Lineline
-
-" Gutentags for lightline
+" Gutentags for Lightline
 augroup MyGutentagsStatusLineRefresher
     autocmd!
     autocmd User GutentagsUpdating call lightline#update()
     autocmd User GutentagsUpdated call lightline#update()
 augroup END
-" tags with lightline and tagbar
+" Tags with Lightline and Tagbar
 source ~/.vim/tagbar_showfunc.vim
 
 
-" ale for lightline
+" ALE for Lightline
 let g:lightline = {
   \ 'colorscheme': 'onedark',
   \ }
-
 " register components
 let g:lightline.component_expand = {
       \  'linter_checking': 'lightline#ale#checking',
@@ -224,7 +248,6 @@ let g:lightline.component_expand = {
       \  'linter_errors': 'lightline#ale#errors',
       \  'linter_ok': 'lightline#ale#ok',
       \ }
-
 " colors for ale plugin
 let g:lightline.component_type = {
       \     'linter_checking': 'left',
@@ -232,7 +255,6 @@ let g:lightline.component_type = {
       \     'linter_errors': 'error',
       \     'linter_ok': 'left',
       \ }
-
 let g:lightline.active = {
       \       'right': [ [ 'lineinfo'  ],
       \                  [ 'fileformat', 'fileencoding', 'filetype'  ],
@@ -243,50 +265,38 @@ let g:lightline.active = {
       \                 [ 'tagbar' ]
       \               ],
       \ }
-
 let g:lightline.component = {
       \   'tagbar': '%{tagbar#currenttag("[%s]", "", "f")}'
       \    }
 
-function! ShowFuncName()
-    return cfi#format("%s", "")
-endfunction
-
-
-" My own code to format S1 logs.
-function! SentinelLogs()
-    :set filetype=python
-    :silent! %s/true/True/g
-    :silent! %s/false/False/g
-    :ALEFix
-endfunction
-autocmd BufRead */SentinelLog_*/match_reports/* call SentinelLogs()
-autocmd VimEnter */SentinelLog_*/match_reports/* echom "Pretty-formatted Sentinel log file."
-
-
 " CtrlP
+" NOT USING CTRLP ANYMORE - FZF is much faster. Settings are here in case FZF
+" is unavailable (for some reason).
 " Make ctrlp a lot faster in git repositories
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-" let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-" let g:ctrlp_user_command = ['.git/', 'git ls-files --cached --others  --exclude-standard %s']
-" let g:ctrlp_user_command = 'mdfind -onlyin %s file'
-let g:ctrlp_use_caching = 0 " ag is so fast that caching isn’t necessary
-let g:ctrlp_max_files = 10000
-let g:ctrlp_working_path_mode = 'r' " Always use the current working directory rather than the location of the current file
-let g:ctrlp_by_filename = 1 " Default to filename only search rather than searching the whole path.  This is more like Xcode's Shift+Cmd+O
+" let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+" " let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+" let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+" " let g:ctrlp_user_command = ['.git/', 'git ls-files --cached --others  --exclude-standard %s']
+" " let g:ctrlp_user_command = 'mdfind -onlyin %s file'
+" let g:ctrlp_use_caching = 0 " ag is so fast that caching isn’t necessary
+" let g:ctrlp_max_files = 10000
+" let g:ctrlp_working_path_mode = 'r' " Always use the current working directory rather than the location of the current file
+" let g:ctrlp_by_filename = 1 " Default to filename only search rather than searching the whole path.  This is more like Xcode's Shift+Cmd+O
+"
+"
+" " Ignore some folders and files for CtrlP indexing
+" let g:ctrlp_custom_ignore = {
+  " \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
+  " \ 'file': '\.so$\|\.dat$|\.DS_Store$\|\.pyc$\|\.*.sw.'
+  " \ }
 
-
-" Ignore some folders and files for CtrlP indexing
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.yardoc\|node_modules\|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$\|\.pyc$\|\.*.sw.'
-  \ }
 
 " FZF
 " Find in files/find tags
+let g:fzf_prefer_tmux = 1
 noremap <C-F> :Ag<cr>
 noremap <C-T> :Tags<cr>
+noremap <C-p> :Files<cr>
 
 " EasyMotion
 " let g:EasyMotion_do_mapping = 0 Disable default mappings
@@ -297,62 +307,62 @@ let g:EasyMotion_smartcase = 1
 " FuzzyFinder
 map <F3> :FufFileWithFullCwd<CR>
 
-
-" man on current word with m
-nmap m <Plug>(Man)
-" nmap m <Plug>(Vman) " Vertical
-
-" vimplugged
+" VIM PLUGGED #plugins
 call plug#begin()
-" Plug 'Valloric/YouCompleteMe' " our lord and savior
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" Language Features
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' } " our lord and savior
 Plug 'w0rp/ale' " async python analysis
 Plug 'davidhalter/jedi-vim' " used mostly for refactor
-" Plug 'python-rope/ropevim' " refactor
-Plug 'tpope/vim-fugitive' " git wrapper
-
-Plug 'joshdick/onedark.vim' " colorscheme
-
-Plug 'scrooloose/nerdcommenter' " autocomment
-Plug 'Raimondi/delimitMate' " auto add newline and }
-Plug 'tpope/vim-surround' " support more surrounds
-Plug 'tpope/vim-dispatch' " background tasks in vim
-Plug 'tpope/vim-repeat'
 Plug 'gregsexton/MatchTag' " match pairs in HTML and XML (blue highlight)
 Plug 'tmhedberg/matchit' " match pairs in HTML and XML with %
-Plug 'Yggdroot/indentLine' " show lines underneath matching brackets
-Plug 'christoomey/vim-tmux-navigator' " integrate with tmux
-Plug 'tpope/vim-obsession' " better VIM session restoration
-Plug 'vim-scripts/L9' " required for other plugins
-Plug 'vim-scripts/FuzzyFinder' " fuzzy file browser
-Plug 'vim-utils/vim-man' " man pages in vim
-Plug 'ciaranm/detectindent' " auto set indentation according to current file indentation
 Plug 'rhysd/vim-clang-format' "  autoformat C family code
 Plug 'gilligan/vim-lldb' " lldb debuuger integrated into vim
-Plug 'ctruett/Checklist.vim' " add checklist filetype to vim
+Plug 'msanders/cocoa.vim' " objective c support
 
-Plug 'easymotion/vim-easymotion' " quickly jump to letters
-Plug 'vim-scripts/camelcasemotion' " ',w', ',b', ',e' to navigate camelcase
+" Source Control
+Plug 'tpope/vim-fugitive' " git wrapper
+Plug 'airblade/vim-gitgutter' " git diff in column line
+
+" Visible
+Plug 'joshdick/onedark.vim' " colorscheme
 Plug 'itchyny/lightline.vim' " better status line
-Plug 'maximbaz/lightline-ale' " ale plugin for lightline
-
-Plug 'ludovicchabant/vim-gutentags' " auto generate tags for projects
-" Plug 'vim-scripts/gtags.vim' " support for GNU Gtags NOT USING?
-Plug 'vim-scripts/ctags.vim' " support for ctags
+Plug 'maximbaz/lightline-ale' " ALE plugin for lightline
 Plug 'majutsushi/tagbar' " show tags in statusbard
 Plug 'tyru/current-func-info.vim' " show function name in statusbar
+Plug 'Yggdroot/indentLine' " visualize indentation levels
 
+" Browsing
+Plug 'vim-scripts/FuzzyFinder' " fuzzy file browser
 Plug 'airblade/vim-rooter' " manage root directory according to .git files
-Plug 'kien/ctrlp.vim' " quick search bar
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " install fzf utility
 Plug 'junegunn/fzf.vim'   " quickly search in files
+" Plug 'kien/ctrlp.vim' " quick search bar - replaced with FZF
 
-Plug 'msanders/cocoa.vim' " objective c support
-" Plug 'darfink/vim-plist' " add symantic support for plist files
+" Tags
+Plug 'ludovicchabant/vim-gutentags' " auto generate tags for projects
+Plug 'vim-scripts/ctags.vim' " support for ctags
+
+" Misc
+Plug 'scrooloose/nerdcommenter' " autocomment
+Plug 'Raimondi/delimitMate' " auto add indent and } on newline
+Plug 'tpope/vim-surround' " support more surrounds
+Plug 'tpope/vim-dispatch' " background tasks in vim
+Plug 'tpope/vim-repeat' " expand actions performed by .
+Plug 'christoomey/vim-tmux-navigator' " integrate with tmux
+Plug 'tpope/vim-obsession' " better VIM session restoration
+Plug 'vim-scripts/L9' " library required for other plugins
+Plug 'vim-utils/vim-man' " man pages in vim
+Plug 'ciaranm/detectindent' " auto set indentation according to current file indentation
+Plug 'ctruett/Checklist.vim' " add checklist filetype to vim
+Plug 'easymotion/vim-easymotion' " quickly jump to letters
+Plug 'vim-scripts/camelcasemotion' " ',w', ',b', ',e' to navigate camelcase
+
 call plug#end()
 
 
-" Colorscheme
+" Colorscheme #color #theme
+" These are required for OneDark to look natural. This bit is sometimes
+" required for Tmux (but I have never had troubles without it).
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 " if (empty($TMUX))
   " if (has("nvim"))
