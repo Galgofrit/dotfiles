@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 OS=$(uname)
 
@@ -8,7 +8,7 @@ elif [ "$OS" = "Linux" ]; then
     if [ $(lsb_release -is) = "Raspbian" ] || \
         [ $(lsb_release -is) = "Debian" ] || \
         [ $(lsb_release -is) = "Ubuntu" ]; then
-        PKG_MANAGER="apt get install "
+        PKG_MANAGER="sudo apt get install"
     fi
 else
     echo "Unsupported OS."
@@ -17,6 +17,7 @@ fi
 
 function install ()
 {
+    echo "Installing $1."
     eval "$PKG_MANAGER $1"
 }
 
@@ -25,7 +26,7 @@ function install ()
 echo "Setting up environment..."
 install git
 install tmux
-instal vim
+install vim
 install stow
 
 install ag
