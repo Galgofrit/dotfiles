@@ -15,30 +15,31 @@ else
     exit 1
 fi
 
+function install ()
+{
+    eval "$PKG_MANAGER $1"
+}
 
-echo $PKG_MANAGER
-exit 0
+# ---
+# Setup
+echo "Setting up environment..."
+install git
+install tmux
+instal vim
+install stow
 
-# install git
-# install tmux
-# instal vim
-# install stow
+install ag
+install ctags
+# install fzf # not required, installed via vimplug
 
-# install ag the silver searcher
-# install ctags
-# install fzf # ! NOT  REQUIRED, INSTALLED VIA VIM PLUG
-
-# install flake8
-# install pylint
-# install yapf
-# install autopep8
-# jedi vim support
+# Language style/linting
+install flake8
+install pylint
+install yapf
+install autopep8
+jedi vim support
 
 #pip3 install jedi
-
-#brew install codequery
-#sudo pip install pyscope
-
 
 stow bash
 stow git
@@ -46,15 +47,16 @@ stow tmux
 stow vim
 stow zsh
 
-# vim pluginstall
-# tmux prefix-I
+vim -E -c PlugUpdate -c q # Update vim-plugged
+vim -E -c PlugInstall -c q # Install all Vim plugins
+~/.tmux/plugins/tpm/scripts/install_plugins.sh # Install Tmux plugins
 
 # Set up fonts
-# clone
 git clone https://github.com/powerline/fonts.git --depth=1
-# install
 cd fonts
 ./install.sh
-# clean-up a bit
 cd ..
 rm -rf fonts
+
+echo "Finished setting up environment."
+exit 0
