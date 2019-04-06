@@ -29,7 +29,11 @@ install tmux
 install vim
 install stow
 
-install the_silver_searcher
+if [ "$OS" = "Darwin" ]; then
+    install the_silver_searcher
+elif [ "$OS" = "Linux" ]; then
+    install silversearcher-ag
+fi
 install ctags
 # install fzf # not required, installed via vimplug
 
