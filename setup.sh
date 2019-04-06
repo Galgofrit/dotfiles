@@ -29,7 +29,7 @@ install tmux
 install vim
 install stow
 
-install ag
+install the_silver_searcher
 install ctags
 # install fzf # not required, installed via vimplug
 
