@@ -8,7 +8,7 @@ elif [ "$OS" = "Linux" ]; then
     if [ $(lsb_release -is) = "Raspbian" ] || \
         [ $(lsb_release -is) = "Debian" ] || \
         [ $(lsb_release -is) = "Ubuntu" ]; then
-        PKG_MANAGER="sudo apt-get install"
+        PKG_MANAGER="sudo apt-get install -y"
     fi
 else
     echo "Unsupported OS."
