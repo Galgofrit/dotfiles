@@ -310,7 +310,9 @@ map <F3> :FufFileWithFullCwd<CR>
 " VIM PLUGGED #plugins
 call plug#begin()
 " Language Features
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' } " our lord and savior
+if (has('python') || has('python3'))
+    Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' } " our lord and savior
+endif
 Plug 'w0rp/ale' " async python analysis
 Plug 'davidhalter/jedi-vim' " used mostly for refactor
 Plug 'gregsexton/MatchTag' " match pairs in HTML and XML (blue highlight)
