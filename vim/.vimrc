@@ -6,6 +6,7 @@
 " #pluginsettings
 " #language
 " #tags
+" #tmux
 " #plugins
 " #color
 
@@ -137,8 +138,6 @@ let g:delimitMate_expand_inside_quotes = 1
 let g:NERDSpaceDelims = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDTrimTrailingWhitespace = 1
-" let g:NERDCommentEmptyLines = 0
-noremap <silent> <leader>cc :call NERDComment(0,"comment")<C-m>
 
 
 " YouCompleteMe settings
@@ -307,6 +306,12 @@ let g:EasyMotion_smartcase = 1
 " FuzzyFinder
 map <F3> :FufFileWithFullCwd<CR>
 
+" TMUX INTEGRATION #tmux
+" autoswap
+set title titlestring=
+let g:autoswap_detect_tmux = 1
+
+
 " VIM PLUGGED #plugins
 call plug#begin()
 " Language Features
@@ -355,7 +360,6 @@ Plug 'tpope/vim-obsession' " better VIM session restoration
 Plug 'vim-scripts/L9' " library required for other plugins
 Plug 'vim-utils/vim-man' " man pages in vim
 Plug 'ciaranm/detectindent' " auto set indentation according to current file indentation
-Plug 'ctruett/Checklist.vim' " add checklist filetype to vim
 Plug 'easymotion/vim-easymotion' " quickly jump to letters
 Plug 'vim-scripts/camelcasemotion' " ',w', ',b', ',e' to navigate camelcase
 
