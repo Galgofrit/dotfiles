@@ -47,6 +47,7 @@ endif
 "" CUSTOM SHORTCUTS #shortcuts
 " Escape for regex
 function! Escape()
+    s/\//\\\//g
     s/(/\\(/g
     s/)/\\)/g
     s/\[/\\\[/g
@@ -196,6 +197,7 @@ let g:ale_fixers = {
 " Auto style/format with \f on python, c, json
 autocmd filetype python nmap <leader>f :ALEFix<cr>
 autocmd filetype c nmap <leader>f :ClangFormat<cr>
+autocmd filetype perl nmap <leader>f :ClangFormat<cr>
 autocmd filetype json nmap <leader>f :execute '%!python -m json.tool'<cr>
 
 
