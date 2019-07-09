@@ -89,7 +89,7 @@ let g:detectindent_preferred_indent = 4
 let g:detectindent_preferred_tabstop = 4
 " autocmd BufReadPost * :DetectIndent " NOTE uncomment for autoindent (based 
 " on current file indentation)
-autocmd filetype xml :DetectIndent
+autocmd FileType xml :DetectIndent
 
 " Quickly set indentation mode by z0, z1, z2
 nnoremap z0 :set fdm=manual<CR>
@@ -101,16 +101,16 @@ set statusline+=%F
 set laststatus=2
 
 " Quick compilation shortcuts
-autocmd filetype c nnoremap <F5> :w <bar> :Dispatch gcc *.c -o out; ./out<CR>
-autocmd filetype python nnoremap <F5> :w <bar> :Dispatch python %<CR>
-autocmd filetype objc nnoremap <F5> :w <bar> :Dispatch clag -framework Foundation *.m  -o out; ./out%<CR>
+autocmd FileType c nnoremap <F5> :w <bar> :Dispatch gcc *.c -o out; ./out<CR>
+autocmd FileType python nnoremap <F5> :w <bar> :Dispatch python %<CR>
+autocmd FileType objc nnoremap <F5> :w <bar> :Dispatch clag -framework Foundation *.m  -o out; ./out%<CR>
 " with no dispatch:
-" autocmd filetype python nnoremap <F5> :w <bar> exec '!python '.shellescape('%')<CR>
-" autocmd filetype c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
-" autocmd filetype objc nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+" autocmd FileType python nnoremap <F5> :w <bar> exec '!python '.shellescape('%')<CR>
+" autocmd FileType c nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
+" autocmd FileType objc nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 
 " Have Vim start in position 0 and in insert mode in git commits
-autocmd filetype gitcommit exe "normal gg0" | startinsert
+autocmd FileType gitcommit exe "normal gg0" | startinsert
 
 " Surround - use lowercase s to surround with
 vmap s S
@@ -127,7 +127,7 @@ augroup XML
 " DelimitMate settings
 let g:delimitMate_autoclose = 1
 let g:delimitMate_matchpairs = "(:),[:],{:}"
-autocmd filetype vim let delimitMate_smart_quotes = "':'" " vimrc uses \" for comments
+autocmd FileType vim let delimitMate_smart_quotes = "':'" " vimrc uses \" for comments
 autocmd FileType python let b:delimitMate_nesting_quotes = ["'", '"'] " triple quotes for python
 let g:delimitMate_jump_expansion = 1
 let g:delimitMate_expand_space = 1
@@ -172,7 +172,7 @@ let g:ycm_semantic_triggers = {
  \ 're!=\s*',
  \ 're!,\s*', ],
  \ }
-autocmd filetype c nnoremap gd :YcmCompleter GoTo<CR>
+autocmd FileType c nnoremap gd :YcmCompleter GoTo<CR>
 
 
 " Jedi-vim
@@ -195,15 +195,15 @@ let g:ale_fixers = {
 
 "" COMMON lANGUAGE FEATURES #language
 " Auto style/format with \f on python, c, json
-autocmd filetype python nmap <leader>f :ALEFix<cr>
-autocmd filetype c nmap <leader>f :ClangFormat<cr>
-autocmd filetype perl nmap <leader>f :ClangFormat<cr>
-autocmd filetype json nmap <leader>f :execute '%!python -m json.tool'<cr>
+autocmd FileType python nmap <leader>f :ALEFix<cr>
+autocmd FileType c nmap <leader>f :ClangFormat<cr>
+autocmd FileType perl nmap <leader>f :ClangFormat<cr>
+autocmd FileType json nmap <leader>f :execute '%!python -m json.tool'<cr>
 
 
 " Auto fix with \r on python, c
-autocmd filetype python nmap <leader>f :ALEFix<cr>
-autocmd filetype c nmap <leader>r :YcmCompleter FixIt<cr>
+autocmd FileType python nmap <leader>f :ALEFix<cr>
+autocmd FileType c nmap <leader>r :YcmCompleter FixIt<cr>
 
 
 "" TAGS #tags
