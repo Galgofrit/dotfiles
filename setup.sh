@@ -41,8 +41,11 @@ stow zsh
 install zsh
 
 if [ "$OS" = "Darwin" ]; then
+    # MacOS Specifics
     install the_silver_searcher
+    nstall https://raw.githubusercontent.com/Homebrew/homebrew-core/86a44a0a552c673a05f11018459c9f5faae3becc/Formula/python@2.rb
 elif [ "$OS" = "Linux" ]; then
+    # Linux Specifics
     install silversearcher-ag
 fi
 install ctags
