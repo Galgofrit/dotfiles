@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export PATH=$PATH:$HOME/Library/Python/2.7/bin
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/galg/.oh-my-zsh"
@@ -99,6 +99,7 @@ export HOMEBREW_GITHUB_API_TOKEN=67949c42a8cdf30cfc42276a0e60255cb09a4161
 
 # Locale, otherwise prompt is scrambled
 export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -111,12 +112,14 @@ alias vi=vim
 alias bt=BluetoothDeviceConnector
 alias xm3="BluetoothDeviceConnector 70-26-05-e0-a6-94"
 
+alias library="cd /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include"
 alias syscall="sudo dtrace -lP syscall"
-alias ida64="open /Applications/IDA Pro 7.1/ida64.app"
-alias ida="open /Applications/IDA Pro 7.1/ida.app"
+alias ida64="open -a /Applications/IDA\ Pro\ 7.4/ida64.app --"
+alias ida="open -a /Applications/IDA Pro 7.4/ida.app --"
 alias lldb='PATH=/usr/bin:$PATH lldb'
 
 alias tree="git log --oneline --graph --decorate --all"
+alias branch-authors="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | less"
 
 # setopt prompt_subst
 # PS1='%n@%m $(shrink_path -f)>'
@@ -126,7 +129,9 @@ alias tree="git log --oneline --graph --decorate --all"
 # export MANPAGER="env MAN_PN=1 mvim -v -M +MANPAGER -"
 
 # SentinelOne 
-alias sm=~/Library/Developer/Xcode/DerivedData/scan_macho-gcohbwpwfeblrjdihmrvrqtedbdh/Build/Products/Debug/scan_macho
+export PATH=$PATH:/Users/galg/coding/ida_similarity
+
+alias sm=~/scan_macho
 alias smp="sm print --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist"
 alias sms="sm scan --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist --whitelist ~/Malware\ Land --file"
 alias class-dump="/Applications/class-dump"
@@ -136,6 +141,9 @@ alias readlink="greadlink"
 alias sigtypes="~/sentinel/signature_types.sh | less"
 alias view-logs="log show system_logs.logarchive | grep sentinel | vim - "
 
+alias vpn_connect="sudo bash -c '/Users/galg/coding/vpn.sh &'"
+
+alias curatheme='cd ~/Library/Application Support/cura/'
 # Dark theme for Slack - apply after Slack updates
 alias slackdark='cat ~/slack_dark_theme.js >> /Applications/Slack.app/Contents/Resources/app.asar.unpacked/src/static/ssb-interop.js'
 
@@ -149,3 +157,10 @@ source ~/.python_path
 export FZF_DEFAULT_COMMAND='ag -g ""'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="/usr/local/opt/bison/bin:$PATH"
+
+source /Users/galg/Library/Preferences/org.dystroy.broot/launcher/bash/br
+
+setopt noincappendhistory # Don't share history between Tmux panes
+setopt nosharehistory
