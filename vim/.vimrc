@@ -185,7 +185,8 @@ set bs=2
 
 
 " ALE
-let b:ale_linters = ['flake8', 'pylint'] " Check Python files with flake8 and pylint.
+" let b:ale_linters = ['flake8', 'pylint'] " Check Python files with flake8 and pylint (uncomment for styling errors)
+let b:ale_linters = ['pylint'] " Check Python files with pylint.
 let g:ale_completion_enabled = 1 " Enable completion where available.
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -225,6 +226,7 @@ nnoremap <silent> <F4> :TagbarToggle<CR><C-w>l
 let g:tagbar_autoclose = 1
 let g:tagbar_map_nexttag = 'J'
 let g:tagbar_map_prevtag = 'K'
+let g:tagbar_ctags_bin = '/usr/local/bin/ctags'
 
 
 " Lineline
@@ -364,6 +366,7 @@ Plug 'vim-utils/vim-man' " man pages in vim
 Plug 'ciaranm/detectindent' " auto set indentation according to current file indentation
 Plug 'easymotion/vim-easymotion' " quickly jump to letters
 Plug 'vim-scripts/camelcasemotion' " ',w', ',b', ',e' to navigate camelcase
+Plug 'Galgofrit/vim-base64' " encode and decode base64 within VIM
 
 call plug#end()
 
