@@ -31,23 +31,24 @@ echo "Installing Brew..."
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 echo "Setting up environment..."
+
+if [ "$OS" = "Darwin" ]; then
+    # MacOS Specifics
+    install the_silver_searcher
+    brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/86a44a0a552c673a05f11018459c9f5faae3becc/Formula/python@2.rb # Python 2
+elif [ "$OS" = "Linux" ]; then
+    # Linux Specifics
+    install silversearcher-ag
+fi
+
+install python # Python 3
 install git
 install tmux
 install vim
 install stow
 
-# Stow Zsh before installing it to avoid conflict
-stow zsh
+stow zsh # Stow Zsh before installing it to avoid conflict
 install zsh
-
-if [ "$OS" = "Darwin" ]; then
-    # MacOS Specifics
-    install the_silver_searcher
-    nstall https://raw.githubusercontent.com/Homebrew/homebrew-core/86a44a0a552c673a05f11018459c9f5faae3becc/Formula/python@2.rb
-elif [ "$OS" = "Linux" ]; then
-    # Linux Specifics
-    install silversearcher-ag
-fi
 install ctags
 
 # Language style/linting
@@ -70,6 +71,8 @@ stow bash
 stow git
 stow tmux
 stow vim
+
+mkdir ~/.vim/undodir # Set up directory for Vim undo history
 
 vim -E -c PlugUpdate -c q # Update vim-plugged
 vim -E -c PlugInstall -c q # Install all Vim plugins
