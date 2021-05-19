@@ -109,8 +109,11 @@ if [[ -f "/usr/local/bin/mvim" ]]; then
 fi
 
 alias vi=vim
+alias hexer="vim +Vinarise"
 alias bt=BluetoothDeviceConnector
 alias xm3="BluetoothDeviceConnector 70-26-05-e0-a6-94"
+alias less="less -iSR" # -i: searches case insensitive, -S: wrap, -R: retain raw color
+alias to_win="/Users/galg/coding/kvm_controller/to_win.sh"
 
 alias library="cd /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include"
 alias syscall="sudo dtrace -lP syscall"
@@ -130,11 +133,22 @@ alias branch-authors="git for-each-ref --format='%(committerdate) %09 %(authorna
 
 # SentinelOne 
 export PATH=$PATH:/Users/galg/coding/ida_similarity
+export PATH="/Users/galg/coding/osxresearch/tools/cloud-blacklist:$PATH"
+export PATH=$PATH:/Users/galg/coding/errno
+export PATH=$PATH:/Users/galg/shortcuts
+export PATH=$PATH:/Users/galg/Applications/SearchBin
 
 alias sm=~/scan_macho
-alias smp="sm print --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist"
-alias sms="sm scan --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist --whitelist ~/Malware\ Land --file"
-alias class-dump="/Applications/class-dump"
+alias smp="sm print --signatures ~/coding/macos-assets/signatures.plist"
+alias sms="sm scan --signatures ~/coding/macos-assets/signatures.plist --whitelist ~/Malware\ Land --file"
+
+alias smp-old="sm print --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist"
+alias sms-old="sm scan --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist --whitelist ~/Malware\ Land --file"
+
+alias smp-kl="sm print --signatures ~/coding/macos-agent/bundle/sentinel-agent/signatures.plist"
+alias sms-kl="sm scan --signatures ~/coding/macos-agent/bundle/sentinel-agent/signatures.plist --whitelist ~/Malware\ Land --file"
+alias sms-safe="find . -exec /Users/galg/scan_macho scan --signatures /Users/galg/coding/osxagent/submodules/assets/signatures.plist --file {} \;"
+
 alias signature="codesign -dv --verbose=4"
 alias mview="/Applications/MachOView.app/Contents/MacOS/MachOView"
 alias readlink="greadlink"
@@ -142,6 +156,8 @@ alias sigtypes="~/sentinel/signature_types.sh | less"
 alias view-logs="log show system_logs.logarchive | grep sentinel | vim - "
 
 alias vpn_connect="sudo bash -c '/Users/galg/coding/vpn.sh &'"
+alias otp="oathtool --totp -b $(keyring get otp_key galg) | tr -d '\n' | pbcopy && echo Copied OTP to clipboard."
+alias otp_nopb="oathtool --totp -b $(keyring get otp_key galg) | tr -d '\n'"
 
 alias curatheme='cd ~/Library/Application Support/cura/'
 # Dark theme for Slack - apply after Slack updates
@@ -159,8 +175,13 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="/usr/local/opt/bison/bin:$PATH"
+export PATH="/Users/galg/jtool:$PATH"
+export PATH="/Users/galg/coding/ddcctl:$PATH"
+export PATH="/opt/metasploit-framework/bin:$PATH"
+export PATH="/Users/galg/coding/tools/bindiff/bin:$PATH"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
 
-source /Users/galg/Library/Preferences/org.dystroy.broot/launcher/bash/br
+# source /Users/galg/Library/Preferences/org.dystroy.broot/launcher/bash/br
 
 setopt noincappendhistory # Don't share history between Tmux panes
 setopt nosharehistory
