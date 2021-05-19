@@ -71,6 +71,7 @@ stow bash
 stow git
 stow tmux
 stow vim
+stow pylint
 
 mkdir ~/.vim/undodir # Set up directory for Vim undo history
 
