@@ -112,7 +112,7 @@ autocmd FileType objc nnoremap <F5> :w <bar> :Dispatch clag -framework Foundatio
 " autocmd FileType objc nnoremap <F5> :w <bar> exec '!gcc '.shellescape('%').' -o'.shellescape('%:r').' && ./'.shellescape('%:r')<CR>
 
 " Have Vim start in position 0 and in insert mode in git commits
-autocmd FileType gitcommit exe "normal gg0" | startinsert
+autocmd FileType gitcommit exe "normal gg$" | startinsert
 
 " Surround - use lowercase s to surround with
 vmap s S
@@ -149,7 +149,7 @@ let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_confirm_extra_conf = 0
 " let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_objc'
-let g:ycm_global_ycm_extra_conf = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_extra_conf_vim_data   = ['&filetype']
 let g:ycm_seed_identifiers_with_syntax = 1
 let g:ycm_enable_diagnostic_signs = 1
@@ -175,6 +175,7 @@ let g:ycm_semantic_triggers = {
  \ 're!,\s*', ],
  \ }
 autocmd FileType c nnoremap gd :YcmCompleter GoTo<CR>
+autocmd FileType cpp nnoremap gd :YcmCompleter GoTo<CR>
 
 
 " Jedi-vim
@@ -200,6 +201,7 @@ let g:ale_fixers = {
 " Auto style/format with \f on python, c, json
 autocmd FileType python nmap <leader>f :ALEFix<cr>
 autocmd FileType c nmap <leader>f :ClangFormat<cr>
+autocmd FileType cpp nmap <leader>f :ClangFormat<cr>
 autocmd FileType perl nmap <leader>f :ClangFormat<cr>
 autocmd FileType json nmap <leader>f :execute '%!python -m json.tool'<cr>
 
