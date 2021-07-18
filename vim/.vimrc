@@ -28,7 +28,7 @@ set lazyredraw
 set magic
 set showmatch
 set hidden " allow opening of new buffers without saving current one
-set clipboard=unnamed " Merge clipboards with system's
+set clipboard^=unnamed " Merge clipboards with system's
 set undodir=~/.vim/undodir " save undo history when closing file
 set undofile
 
