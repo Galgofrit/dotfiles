@@ -7,6 +7,7 @@
 " #language
 " #tags
 " #tmux
+" #work
 " #plugins
 " #color
 
@@ -71,15 +72,7 @@ function! ShowFuncName()
     return cfi#format("%s", "")
 endfunction
 
-" My own code to format S1 logs.
-function! SentinelLogs()
-    :set filetype=python
-    :silent! %s/true/True/g
-    :silent! %s/false/False/g
-    :ALEFix
-endfunction
-autocmd BufRead */SentinelLog_*/match_reports/* call SentinelLogs()
-autocmd VimEnter */SentinelLog_*/match_reports/* echom "Pretty-formatted Sentinel log file."
+
 
 " Fix shift-tab not functional on some terminals
 nnoremap <S-Tab> <Up>
@@ -348,17 +341,20 @@ map <F3> :FufFileWithFullCwd<CR>
 set title titlestring=
 let g:autoswap_detect_tmux = 1
 
-" artbier syntax highlighting
+" SentinelOne/work-related #work
+" My own code to format S1 logs.
+function! SentinelLogs()
+    :set filetype=python
+    :silent! %s/true/True/g
+    :silent! %s/false/False/g
+    :ALEFix
+endfunction
+autocmd BufRead */SentinelLog_*/match_reports/* call SentinelLogs()
+autocmd VimEnter */SentinelLog_*/match_reports/* echom "Pretty-formatted Sentinel log file."
+
+" s1-arbiter syntax highlighting
 au BufRead,BufNewFile arbiter.txt set filetype=s1arbiter
 au! Syntax s1arbiter source $HOME/.vim/s1arbiter/s1arbiter.vim
-" set rtp+=$HOME/.vim
-
-function! Env()
-    redir => s
-    sil! exe "norm!:ec$\<c-a>'\<c-b>\<right>\<right>\<del>'\<cr>"
-    redir END
-    return split(s)
-endfunction
 
 
 " VIM PLUGGED #plugins
