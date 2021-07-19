@@ -200,29 +200,58 @@ let g:ale_fixers = {
 "" COMMON lANGUAGE FEATURES #language
 " Auto style/format with \f on python, c, json
 autocmd FileType python nmap <leader>f :ALEFix<cr>
-autocmd FileType c nmap <leader>f :ClangFormat<cr>
+autocmd FileType c nmap <leader>f :YcmCompleter FixIt<cr>
 autocmd FileType cpp nmap <leader>f :ClangFormat<cr>
 autocmd FileType perl nmap <leader>f :ClangFormat<cr>
 autocmd FileType json nmap <leader>f :execute '%!python -m json.tool'<cr>
 
+" Refactor with \r on C, C++ (Jedi implements \r on Python)
+autocmd FileType c nmap <leader>r :YcmCompleter RefactorRename
+autocmd FileType cpp nmap <leader>r :YcmCompleter RefactorRenamee
 
-" Auto fix with \r on python, c
-autocmd FileType python nmap <leader>f :ALEFix<cr>
-autocmd FileType c nmap <leader>r :YcmCompleter FixIt<cr>
+" Go to references/usages with \b on C, C++, Python
+autocmd FileType c nmap <leader>b :YcmCompleter GoToReferences<cr>
+autocmd FileType cpp nmap <leader>b :YcmCompleter GoToReferences<cr>
+let g:jedi#usages_command = "<leader>b"
 
 
 "" TAGS #tags
 let g:ctags_statusline=1
 let ctags_title=1
 
+" Rooter (base cwd on git root - takes care of tag generation path.)
+let g:rooter_silent_chdir = 1
+let g:rooter_resolve_links = 1
+
+" cscope
+function! Cscope(option, query)
+  let color = '{ x = $1; $1 = ""; z = $3; $3 = ""; printf "\033[34m%s\033[0m:\033[31m%s\033[0m\011\033[37m%s\033[0m\n", x,z,$0; }'
+  let opts = {
+  \ 'source':  "cscope -dL" . a:option . " " . a:query . " | awk '" . color . "'",
+  \ 'options': ['--ansi', '--prompt', '> ',
+  \             '--multi', '--bind', 'alt-a:select-all,alt-d:deselect-all',
+  \             '--color', 'fg:188,fg+:222,bg+:#3a3a3a,hl+:104'],
+  \ 'down': '40%'
+  \ }
+  function! opts.sink(lines)
+    let data = split(a:lines)
+    let file = split(data[0], ":")
+    execute 'e ' . '+' . file[1] . ' ' . file[0]
+  endfunction
+  call fzf#run(opts)
+endfunction
+
+" Invoke command - \x for x-refs.
+nnoremap <silent> <Leader>x :call Cscope('3', expand('<cword>'))<CR>
+
 " Gutentags
-" let g:gutentags_modules = ['ctags', 'gtags_cscope']
-let g:gutentags_modules = ['ctags']
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+" let g:gutentags_modules = ['ctags']
 let g:gutentags_cache_dir = expand('~/.cache/tags')
 let g:gutentags_project_root = ['.git', '.cproject', 'Makefile', '.xcodeproj']
 let g:GtagsCscope_Auto_Map = 1
 let g:GtagsCscope_Auto_Load = 1
-let g:GtagsCscope_Quiet = 1
+let g:GtagsCscope_Quiet = 0
 set statusline+=%{gutentags#statusline()}
 
 " Tagbar
@@ -319,6 +348,18 @@ map <F3> :FufFileWithFullCwd<CR>
 set title titlestring=
 let g:autoswap_detect_tmux = 1
 
+" artbier syntax highlighting
+au BufRead,BufNewFile arbiter.txt set filetype=s1arbiter
+au! Syntax s1arbiter source $HOME/.vim/s1arbiter/s1arbiter.vim
+" set rtp+=$HOME/.vim
+
+function! Env()
+    redir => s
+    sil! exe "norm!:ec$\<c-a>'\<c-b>\<right>\<right>\<del>'\<cr>"
+    redir END
+    return split(s)
+endfunction
+
 
 " VIM PLUGGED #plugins
 call plug#begin()
@@ -371,6 +412,7 @@ Plug 'ciaranm/detectindent' " auto set indentation according to current file ind
 Plug 'easymotion/vim-easymotion' " quickly jump to letters
 Plug 'vim-scripts/camelcasemotion' " ',w', ',b', ',e' to navigate camelcase
 Plug 'Galgofrit/vim-base64' " encode and decode base64 within VIM
+Plug 'Shougo/vinarise.vim' " hex editor
 
 call plug#end()
 
