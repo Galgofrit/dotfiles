@@ -376,7 +376,7 @@ Plug 'tpope/vim-fugitive' " git wrapper
 Plug 'airblade/vim-gitgutter' " git diff in column line
 
 " Visible
-Plug 'joshdick/onedark.vim' " colorscheme
+Plug 'joshdick/onedark.vim', { 'branch': 'main' }  " colorscheme
 Plug 'itchyny/lightline.vim' " better status line
 Plug 'maximbaz/lightline-ale' " ALE plugin for lightline
 Plug 'majutsushi/tagbar' " show tags in statusbard
