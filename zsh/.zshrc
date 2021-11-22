@@ -156,8 +156,6 @@ alias sigtypes="~/sentinel/signature_types.sh | less"
 alias view-logs="log show system_logs.logarchive | grep sentinel | vim - "
 
 alias vpn_connect="sudo bash -c '/Users/galg/coding/vpn.sh &'"
-alias otp="oathtool --totp -b $(keyring get otp_key galg) | tr -d '\n' | pbcopy && echo Copied OTP to clipboard."
-alias otp_nopb="oathtool --totp -b $(keyring get otp_key galg) | tr -d '\n'"
 
 alias curatheme='cd ~/Library/Application Support/cura/'
 # Dark theme for Slack - apply after Slack updates
