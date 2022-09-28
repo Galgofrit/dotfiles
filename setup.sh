@@ -6,7 +6,8 @@
 OS=$(uname)
 
 if [ "$OS" = "Darwin" ]; then
-    PKG_MANAGER="brew install"
+    BREW_PATH=/opt/homebrew/bin/brew
+    PKG_MANAGER="$BREW_PATH install"
 elif [ "$OS" = "Linux" ]; then
     if [ $(lsb_release -is) = "Raspbian" ] || \
         [ $(lsb_release -is) = "Debian" ] || \
@@ -27,8 +28,16 @@ function install ()
 
 # ---
 # Setup
-echo "Installing Brew..."
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+
+# Install Homebrew
+if [ "$OS" = "Darwin" ]; then
+    if [ -f "$BREW_PATH" ]; then
+        echo "Brew already installed on the system. Proceeding..."
+    else
+        echo "Installing Brew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    fi
+fi
 
 echo "Setting up environment..."
 
@@ -90,6 +99,7 @@ cd fonts
 ./install.sh
 cd ..
 rm -rf fonts
+echo "Change fonts for terminal emulator now, to 'Droid Sans Mono for Powerline', size 14."
 
 echo "Finished setting up environment."
 exit 0
