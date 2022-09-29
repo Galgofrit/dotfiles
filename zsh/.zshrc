@@ -137,18 +137,56 @@ export PATH="/Users/galg/coding/osxresearch/tools/cloud-blacklist:$PATH"
 export PATH=$PATH:/Users/galg/coding/errno
 export PATH=$PATH:/Users/galg/shortcuts
 export PATH=$PATH:/Users/galg/Applications/SearchBin
+export PATH=$PATH:/Users/galg/coding/osxresearch/diff_binaries/bin
+
+
+build_agent() {
+    mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old
+    echo "" > /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
+    chmod +x /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
+    /Users/galg/coding/macos-agent/build.sh --debug
+    ret_val=$?
+    if [ $ret_val -eq 0 ]; then
+        osascript -e 'display notification "Finished building Sentinel agent ('$ret_val')." with title "Compilation Finished"'
+        open '/Users/galg/coding/macos-agent/distribution/build/Debug_artifacts/'
+    else
+        osascript -e 'display notification "Could not build Sentinel agent ('$ret_val')." with title "Compilation Failed"'
+    fi
+    #mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
+}
+
+build_agent_testing() {
+    mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old
+    echo "" > /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
+    chmod +x /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
+    /Users/galg/coding/macos-agent/build.sh --testing
+    ret_val=$?
+    if [ $ret_val -eq 0 ]; then
+        osascript -e 'display notification "Finished building Sentinel agent ('$ret_val')." with title "Compilation Finished"'
+        open '/Users/galg/coding/macos-agent/distribution/build/Testing_artifacts/'
+    else
+        osascript -e 'display notification "Could not build Sentinel agent ('$ret_val')." with title "Compilation Failed"'
+    fi
+    #mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
+}
+
 
 alias sm=~/scan_macho
 alias smp="sm print --signatures ~/coding/macos-assets/signatures.plist"
 alias sms="sm scan --signatures ~/coding/macos-assets/signatures.plist --whitelist ~/Malware\ Land --file"
 
-alias smp-old="sm print --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist"
-alias sms-old="sm scan --signatures ~/coding/osxagent/bundle/sentinel-agent/signatures.plist --whitelist ~/Malware\ Land --file"
+alias smp-agent="sm print --signatures ~/coding/macos-agent/submodules/assets/signatures.plist"
+alias sms-agent="sm scan --signatures ~/coding/macos-agent/submodules/assets/signatures.plist --whitelist ~/Malware\ Land --file"
 
 alias smp-kl="sm print --signatures ~/coding/macos-agent/bundle/sentinel-agent/signatures.plist"
 alias sms-kl="sm scan --signatures ~/coding/macos-agent/bundle/sentinel-agent/signatures.plist --whitelist ~/Malware\ Land --file"
 alias sms-safe="find . -exec /Users/galg/scan_macho scan --signatures /Users/galg/coding/osxagent/submodules/assets/signatures.plist --file {} \;"
 
+diff_binary_sections() {
+    diff -y <(r2 -q -c 'iS entropy,md5' $1 | awk '{print $7" "$8" "$NF}') <(r2 -q -c 'iS entropy,md5' $2 | awk '{print $7" "$8" "$NF}')
+}
+
+alias hexlify="/Users/galg/coding/hexlify.py"
 alias signature="codesign -dv --verbose=4"
 alias mview="/Applications/MachOView.app/Contents/MacOS/MachOView"
 alias readlink="greadlink"
@@ -178,6 +216,7 @@ export PATH="/Users/galg/coding/ddcctl:$PATH"
 export PATH="/opt/metasploit-framework/bin:$PATH"
 export PATH="/Users/galg/coding/tools/bindiff/bin:$PATH"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="/Users/galg/coding/uniqsymz:$PATH"
 
 # source /Users/galg/Library/Preferences/org.dystroy.broot/launcher/bash/br
 

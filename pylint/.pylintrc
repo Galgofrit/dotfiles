@@ -1,11 +1,5 @@
 [MASTER]
-init-hook='import sys; import os; sys.path.extend([
-    "/usr/local/bin",
-    "/usr/local/Cellar/python@3.9/3.9.0_4/Frameworks/Python.framework/Versions/3.9/lib/python39.zip",
-    "/usr/local/Cellar/python@3.9/3.9.0_4/Frameworks/Python.framework/Versions/3.9/lib/python3.9",
-    "/usr/local/Cellar/python@3.9/3.9.0_4/Frameworks/Python.framework/Versions/3.9/lib/python3.9/lib-dynload",
-    "/usr/local/lib/python3.9/site-packages",
-    "/usr/local/lib/python3.9/site-packages/IPython/extensions",
-    os.path.expanduser("~/.ipython"),
-    os.path.expanduser("~/coding/osxresearch/diff_binaries")
-])'
+init-hook='import sys; import os; sys.path.extend([ "/usr/local/bin", "/usr/local/Cellar/python@3.9/3.9.0_4/Frameworks/Python.framework/Versions/3.9/lib/python39.zip", "/usr/local/Cellar/python@3.9/3.9.0_4/Frameworks/Python.framework/Versions/3.9/lib/python3.9", "/usr/local/Cellar/python@3.9/3.9.0_4/Frameworks/Python.framework/Versions/3.9/lib/python3.9/lib-dynload", "/usr/local/lib/python3.9/site-packages", "/usr/local/lib/python3.9/site-packages/IPython/extensions", os.path.expanduser("~/.ipython"), os.path.expanduser("~/coding/osxresearch/diff_binaries")])'
+
+[FORMAT]
+max-line-length=110
