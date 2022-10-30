@@ -55,6 +55,7 @@ install git
 install tmux
 install vim
 install stow
+install coreutils
 
 stow zsh # Stow Zsh before installing it to avoid conflict
 install zsh
