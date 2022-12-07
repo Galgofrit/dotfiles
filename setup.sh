@@ -56,6 +56,7 @@ install tmux
 install vim
 install stow
 install coreutils
+install oath-toolkit
 
 stow zsh # Stow Zsh before installing it to avoid conflict
 install zsh
@@ -67,7 +68,7 @@ install pylint
 install yapf
 install autopep8
 install cmake
-jedi vim support
+# jedi vim support
 
 #Install OhMyZsh
 echo "Installing oh my zsh..."
