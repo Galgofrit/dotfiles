@@ -195,7 +195,7 @@ let g:ale_fixers = {
 " Auto style/format with \f on python, c, json
 autocmd FileType python nmap <leader>f :ALEFix<cr>
 autocmd FileType c nmap <leader>f :YcmCompleter FixIt<cr>
-autocmd FileType cpp nmap <leader>f :ClangFormat<cr>
+" autocmd FileType cpp nmap <leader>f :ClangFormat<cr>
 autocmd FileType perl nmap <leader>f :ClangFormat<cr>
 autocmd FileType json nmap <leader>f :execute '%!python -m json.tool'<cr>
 
@@ -355,7 +355,7 @@ autocmd VimEnter */SentinelLog_*/match_reports/* echom "Pretty-formatted Sentine
 
 " s1-arbiter syntax highlighting
 au BufRead,BufNewFile arbiter.txt set filetype=s1arbiter
-au! Syntax s1arbiter source $HOME/.vim/s1arbiter/s1arbiter.vim
+au! Syntax s1arbiter source $HOME/coding/macos-agent/tools/language_parser/s1arbiter.vim
 
 
 " VIM PLUGGED #plugins
@@ -410,6 +410,7 @@ Plug 'easymotion/vim-easymotion' " quickly jump to letters
 Plug 'vim-scripts/camelcasemotion' " ',w', ',b', ',e' to navigate camelcase
 Plug 'Galgofrit/vim-base64' " encode and decode base64 within VIM
 Plug 'Shougo/vinarise.vim' " hex editor
+Plug 'fidian/hexmode'
 
 call plug#end()
 

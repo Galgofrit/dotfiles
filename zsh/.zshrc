@@ -117,9 +117,10 @@ alias to_win="/Users/galg/coding/kvm_controller/to_win.sh"
 
 alias library="cd /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include"
 alias syscall="sudo dtrace -lP syscall"
-alias ida64="open -a /Applications/IDA\ Pro\ 7.4/ida64.app --"
-alias ida="open -a /Applications/IDA Pro 7.4/ida.app --"
+alias ida="open -a /Applications/IDA\ Pro\ 8.1/ida64.app --"
+#alias ida="open -a /Applications/IDA Pro 7.4/ida.app --"
 alias lldb='PATH=/usr/bin:$PATH lldb'
+alias jtool="arch -x86_64 /opt/homebrew/bin/jtool"
 
 alias tree="git log --oneline --graph --decorate --all"
 alias branch-authors="git for-each-ref --format='%(committerdate) %09 %(authorname) %09 %(refname)' | sort -k5n -k2M -k3n -k4n | less"
@@ -141,7 +142,6 @@ export PATH=$PATH:/Users/galg/coding/osxresearch/diff_binaries/bin
 
 
 build_agent() {
-    mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old
     echo "" > /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
     chmod +x /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
     /Users/galg/coding/macos-agent/build.sh --debug
@@ -152,11 +152,9 @@ build_agent() {
     else
         osascript -e 'display notification "Could not build Sentinel agent ('$ret_val')." with title "Compilation Failed"'
     fi
-    #mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
 }
 
 build_agent_testing() {
-    mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old
     echo "" > /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
     chmod +x /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
     /Users/galg/coding/macos-agent/build.sh --testing
@@ -167,13 +165,13 @@ build_agent_testing() {
     else
         osascript -e 'display notification "Could not build Sentinel agent ('$ret_val')." with title "Compilation Failed"'
     fi
-    #mv /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh.old /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
 }
 
 
 alias sm=~/scan_macho
 alias smp="sm print --signatures ~/coding/macos-assets/signatures.plist"
 alias sms="sm scan --signatures ~/coding/macos-assets/signatures.plist --whitelist ~/Malware\ Land --file"
+alias dsms="sm scan --libdfi ~/coding/macos-agent/libraries/dfi/libdfi.dylib --file ./"
 
 alias smp-agent="sm print --signatures ~/coding/macos-agent/submodules/assets/signatures.plist"
 alias sms-agent="sm scan --signatures ~/coding/macos-agent/submodules/assets/signatures.plist --whitelist ~/Malware\ Land --file"
@@ -196,8 +194,6 @@ alias view-logs="log show system_logs.logarchive | grep sentinel | vim - "
 alias vpn_connect="sudo bash -c '/Users/galg/coding/vpn.sh &'"
 
 alias curatheme='cd ~/Library/Application Support/cura/'
-# Dark theme for Slack - apply after Slack updates
-alias slackdark='cat ~/slack_dark_theme.js >> /Applications/Slack.app/Contents/Resources/app.asar.unpacked/src/static/ssb-interop.js'
 
 source ~/.python_path
 
@@ -222,3 +218,5 @@ export PATH="/Users/galg/coding/uniqsymz:$PATH"
 
 setopt noincappendhistory # Don't share history between Tmux panes
 setopt nosharehistory
+
+alias vt-download="vt download -k ceff9326b9dbe56eca7790af8a391902f0836367f5ccdd5f7b0a49cfc693b73a"
