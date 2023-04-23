@@ -200,6 +200,14 @@ source ~/.python_path
 # powerline
 # . /Users/galg/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 
+find_sha256() {
+    hash=$1
+    find . -type f -exec sh -c 'shasum -a256 "$2" | cut -f 1 -d " " | sed "s|^\\\\||" | grep -Eqi "$1"' find-sh "$hash" {} \; -print
+}
+find_sha1() {
+    hash=$1
+    find . -type f -exec sh -c 'shasum -a1 "$2" | cut -f 1 -d " " | sed "s|^\\\\||" | grep -Eqi "$1"' find-sh "$hash" {} \; -print
+}
 
 # FZF
 export FZF_DEFAULT_COMMAND='ag -g ""'
