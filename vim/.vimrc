@@ -438,3 +438,6 @@ colorscheme onedark
 set background=dark " for the dark version
 highlight Normal ctermbg=black
 
+" Show trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/

@@ -117,7 +117,7 @@ alias to_win="/Users/galg/coding/kvm_controller/to_win.sh"
 
 alias library="cd /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include"
 alias syscall="sudo dtrace -lP syscall"
-alias ida="open -a /Applications/IDA\ Pro\ 8.1/ida64.app --"
+alias ida="open -a /Applications/IDA\ Pro\ 8.2/ida64.app --"
 #alias ida="open -a /Applications/IDA Pro 7.4/ida.app --"
 alias lldb='PATH=/usr/bin:$PATH lldb'
 alias jtool="arch -x86_64 /opt/homebrew/bin/jtool"
@@ -228,3 +228,6 @@ setopt noincappendhistory # Don't share history between Tmux panes
 setopt nosharehistory
 
 alias vt-download="vt download -k ceff9326b9dbe56eca7790af8a391902f0836367f5ccdd5f7b0a49cfc693b73a"
+alias pixel="open vnc://10.0.0.101:5900"
+
+export PATH=$PATH:/Users/GalG/.nexustools
