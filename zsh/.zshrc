@@ -227,7 +227,7 @@ export PATH="/Users/galg/coding/uniqsymz:$PATH"
 setopt noincappendhistory # Don't share history between Tmux panes
 setopt nosharehistory
 
-alias vt-download="vt download -k ceff9326b9dbe56eca7790af8a391902f0836367f5ccdd5f7b0a49cfc693b73a"
+alias vt-download="vt download -k #REDACTED-replace-with-key"
 alias pixel="open vnc://10.0.0.101:5900"
 
 export PATH=$PATH:/Users/GalG/.nexustools
