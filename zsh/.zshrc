@@ -2,7 +2,7 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 # export PATH=$PATH:$HOME/Library/Python/2.7/bin
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/galg/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -113,7 +113,7 @@ alias hexer="vim +Vinarise"
 alias bt=BluetoothDeviceConnector
 alias xm3="BluetoothDeviceConnector 70-26-05-e0-a6-94"
 alias less="less -iSR" # -i: searches case insensitive, -S: wrap, -R: retain raw color
-alias to_win="/Users/galg/coding/kvm_controller/to_win.sh"
+alias to_win="$HOME/coding/kvm_controller/to_win.sh"
 
 alias library="cd /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk/usr/include"
 alias syscall="sudo dtrace -lP syscall"
@@ -133,35 +133,35 @@ alias branch-authors="git for-each-ref --format='%(committerdate) %09 %(authorna
 # export MANPAGER="env MAN_PN=1 mvim -v -M +MANPAGER -"
 
 # SentinelOne 
-export PATH=$PATH:/Users/galg/coding/ida_similarity
-export PATH="/Users/galg/coding/osxresearch/tools/cloud-blacklist:$PATH"
-export PATH=$PATH:/Users/galg/coding/errno
-export PATH=$PATH:/Users/galg/shortcuts
-export PATH=$PATH:/Users/galg/Applications/SearchBin
-export PATH=$PATH:/Users/galg/coding/osxresearch/diff_binaries/bin
+export PATH=$PATH:$HOME/coding/ida_similarity
+export PATH="$HOME/coding/osxresearch/tools/cloud-blacklist:$PATH"
+export PATH=$PATH:$HOME/coding/errno
+export PATH=$PATH:$HOME/shortcuts
+export PATH=$PATH:$HOME/Applications/SearchBin
+export PATH=$PATH:$HOME/coding/osxresearch/diff_binaries/bin
 
 
 build_agent() {
-    echo "" > /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
-    chmod +x /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
-    /Users/galg/coding/macos-agent/build.sh --debug
+    echo "" > $HOME/coding/macos-agent/distribution/scripts/universal_creator.sh
+    chmod +x $HOME/coding/macos-agent/distribution/scripts/universal_creator.sh
+    $HOME/coding/macos-agent/build.sh --debug
     ret_val=$?
     if [ $ret_val -eq 0 ]; then
         osascript -e 'display notification "Finished building Sentinel agent ('$ret_val')." with title "Compilation Finished"'
-        open '/Users/galg/coding/macos-agent/distribution/build/Debug_artifacts/'
+        open '$HOME/coding/macos-agent/distribution/build/Debug_artifacts/'
     else
         osascript -e 'display notification "Could not build Sentinel agent ('$ret_val')." with title "Compilation Failed"'
     fi
 }
 
 build_agent_testing() {
-    echo "" > /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
-    chmod +x /Users/galg/coding/macos-agent/distribution/scripts/universal_creator.sh
-    /Users/galg/coding/macos-agent/build.sh --testing
+    echo "" > $HOME/coding/macos-agent/distribution/scripts/universal_creator.sh
+    chmod +x $HOME/coding/macos-agent/distribution/scripts/universal_creator.sh
+    $HOME/coding/macos-agent/build.sh --testing
     ret_val=$?
     if [ $ret_val -eq 0 ]; then
         osascript -e 'display notification "Finished building Sentinel agent ('$ret_val')." with title "Compilation Finished"'
-        open '/Users/galg/coding/macos-agent/distribution/build/Testing_artifacts/'
+        open '$HOME/coding/macos-agent/distribution/build/Testing_artifacts/'
     else
         osascript -e 'display notification "Could not build Sentinel agent ('$ret_val')." with title "Compilation Failed"'
     fi
@@ -178,27 +178,27 @@ alias sms-agent="sm scan --signatures ~/coding/macos-agent/submodules/assets/sig
 
 alias smp-kl="sm print --signatures ~/coding/macos-agent/bundle/sentinel-agent/signatures.plist"
 alias sms-kl="sm scan --signatures ~/coding/macos-agent/bundle/sentinel-agent/signatures.plist --whitelist ~/Malware\ Land --file"
-alias sms-safe="find . -exec /Users/galg/scan_macho scan --signatures /Users/galg/coding/osxagent/submodules/assets/signatures.plist --file {} \;"
+alias sms-safe="find . -exec $HOME/scan_macho scan --signatures $HOME/coding/osxagent/submodules/assets/signatures.plist --file {} \;"
 
 diff_binary_sections() {
     diff -y <(r2 -q -c 'iS entropy,md5' $1 | awk '{print $7" "$8" "$NF}') <(r2 -q -c 'iS entropy,md5' $2 | awk '{print $7" "$8" "$NF}')
 }
 
-alias hexlify="/Users/galg/coding/hexlify.py"
+alias hexlify="$HOME/coding/hexlify.py"
 alias signature="codesign -dv --verbose=4"
 alias mview="/Applications/MachOView.app/Contents/MacOS/MachOView"
 alias readlink="greadlink"
 alias sigtypes="~/sentinel/signature_types.sh | less"
 alias view-logs="log show system_logs.logarchive | grep sentinel | vim - "
 
-alias vpn_connect="sudo bash -c '/Users/galg/coding/vpn.sh &'"
+alias vpn_connect="sudo bash -c '$HOME/coding/vpn.sh &'"
 
 alias curatheme='cd ~/Library/Application Support/cura/'
 
 source ~/.python_path
 
 # powerline
-# . /Users/galg/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
+# . $HOME/Library/Python/2.7/lib/python/site-packages/powerline/bindings/zsh/powerline.zsh
 
 find_sha256() {
     hash=$1
@@ -215,14 +215,14 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export PATH="/usr/local/opt/bison/bin:$PATH"
-export PATH="/Users/galg/jtool:$PATH"
-export PATH="/Users/galg/coding/ddcctl:$PATH"
+export PATH="$HOME/jtool:$PATH"
+export PATH="$HOME/coding/ddcctl:$PATH"
 export PATH="/opt/metasploit-framework/bin:$PATH"
-export PATH="/Users/galg/coding/tools/bindiff/bin:$PATH"
+export PATH="$HOME/coding/tools/bindiff/bin:$PATH"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
-export PATH="/Users/galg/coding/uniqsymz:$PATH"
+export PATH="$HOME/coding/uniqsymz:$PATH"
 
-# source /Users/galg/Library/Preferences/org.dystroy.broot/launcher/bash/br
+# source $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br
 
 setopt noincappendhistory # Don't share history between Tmux panes
 setopt nosharehistory

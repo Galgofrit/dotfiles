@@ -6,7 +6,7 @@
 OS=$(uname)
 
 if [ "$OS" = "Darwin" ]; then
-    BREW_PATH=/opt/homebrew/bin/brew
+    BREW_PATH=$(which brew)
     PKG_MANAGER="$BREW_PATH install"
 elif [ "$OS" = "Linux" ]; then
     if [ $(lsb_release -is) = "Raspbian" ] || \
