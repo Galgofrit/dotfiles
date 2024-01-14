@@ -40,6 +40,9 @@ set smarttab
 set shiftwidth=4
 set tabstop=4
 
+" Add only one level of indentation after brackets (e.g. function arguments)
+set cino=(0,W4
+
 command W w !sudo tee % > /dev/null
 
 " Have Vim jump to the last position when reopening a file
@@ -83,7 +86,7 @@ inoremap <S-Tab> <Up>
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
 let g:detectindent_preferred_tabstop = 4
-" autocmd BufReadPost * :DetectIndent " NOTE uncomment for autoindent (based 
+" autocmd BufReadPost * :DetectIndent " NOTE uncomment for autoindent (based
 " on current file indentation)
 autocmd FileType xml :DetectIndent
 
@@ -189,7 +192,8 @@ let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['autopep8', 'yapf'],
 \}
-
+nnoremap <silent> <leader>a :ALENext -wrap<CR>
+nnoremap <silent> <leader>A :ALENext -wrap -error<CR>
 
 "" COMMON lANGUAGE FEATURES #language
 " Auto style/format with \f on python, c, json
@@ -357,6 +361,7 @@ autocmd VimEnter */SentinelLog_*/match_reports/* echom "Pretty-formatted Sentine
 au BufRead,BufNewFile arbiter.txt set filetype=s1arbiter
 au! Syntax s1arbiter source $HOME/coding/macos-agent/tools/language_parser/s1arbiter.vim
 
+au BufRead,BufNewFile *.inf set filetype=toml
 
 " VIM PLUGGED #plugins
 call plug#begin()
@@ -398,6 +403,7 @@ Plug 'vim-scripts/ctags.vim' " support for ctags
 " Misc
 Plug 'scrooloose/nerdcommenter' " autocomment
 Plug 'Raimondi/delimitMate' " auto add indent and } on newline
+Plug 'Vimjas/vim-python-pep8-indent' " proper Python indentation configuration
 Plug 'tpope/vim-surround' " support more surrounds
 Plug 'tpope/vim-dispatch' " background tasks in vim
 Plug 'tpope/vim-repeat' " expand actions performed by .

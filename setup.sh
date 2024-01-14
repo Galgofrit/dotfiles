@@ -64,19 +64,18 @@ install ctags
 
 # Language style/linting
 install flake8
-install pylint
+sudo pip3 install pylint
 install yapf
 install autopep8
 install cmake
 # jedi vim support
+#pip3 install jedi TODO
 
 #Install OhMyZsh
 echo "Installing oh my zsh..."
 curl -Lo install.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
 sh install.sh
 rm install.sh
-
-#pip3 install jedi TODO
 
 stow bash
 stow git

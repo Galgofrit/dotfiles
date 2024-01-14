@@ -221,6 +221,7 @@ export PATH="/opt/metasploit-framework/bin:$PATH"
 export PATH="$HOME/coding/tools/bindiff/bin:$PATH"
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="$HOME/coding/uniqsymz:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 
 # source $HOME/Library/Preferences/org.dystroy.broot/launcher/bash/br
 
@@ -231,3 +232,4 @@ alias vt-download="vt download -k #REDACTED-replace-with-key"
 alias pixel="open vnc://10.0.0.101:5900"
 
 export PATH=$PATH:/Users/GalG/.nexustools
+alias python=python3
